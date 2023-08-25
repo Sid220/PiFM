@@ -1,0 +1,33 @@
+{
+  "freq": 88.6,
+  "ui": {
+    "enabled": true,
+    "port": 8000
+  },
+  "music_dir": "/home/sid/spot",
+  "ftp": {
+    "enabled": false,
+    "port": 21,
+    "host": "ftp.example.com",
+    "user": "user",
+    "pass": "pass"
+  },
+  "news": {
+    "enabled": true,
+    "bbc": true,
+    "intro": {
+      "enabled": true,
+      "file": "assets/News Theme Headline.mp3"
+    },
+    "rss": {
+      "enabled": true,
+      "url": "http://feeds.bbci.co.uk/news/rss.xml?edition=us",
+      "max_headlines": 5
+    },
+    "youtube": {
+      "enabled": true,
+      "channel": "UC16niRr50-MSBwiO3YDb3RA"
+    },
+    "interval": 2
+  }
+}

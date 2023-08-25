@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        * {
+            font-family: Ubuntu, sans-serif;
+        }
+
+        li {
+            cursor: pointer;
+        }
+
+        .current {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: #000;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+        }
+    </style>
+    <script>
+        function clear_queue() {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "/clear", true);
+            xhr.send();
+            get_queue();
+        }
+
+        function add_to_queue(el) {
+            let file = el.getAttribute("data-file");
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "/add/" + file, true);
+            xhr.send();
+        }
+
+        function get_queue() {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "/queue", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let queue = JSON.parse(xhr.responseText);
+                    let ul = document.querySelector("ul");
+                    ul.innerHTML = "";
+                    for (let i = 0; i < queue.length; i++) {
+                        let li = document.createElement("li");
+                        li.setAttribute("data-file", queue[i]);
+                        li.addEventListener("click", function () {
+                            let xhr = new XMLHttpRequest();
+                            xhr.open("POST", "/remove/" + queue[i], true);
+                            xhr.send();
+                            get_queue();
+                        });
+                        li.innerHTML = format_song(queue[i]);
+                        ul.appendChild(li);
+                    }
+                }
+            };
+            xhr.send();
+
+            let xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", "/current", true);
+            xhr2.onreadystatechange = function () {
+                if (xhr2.readyState === 4 && xhr2.status === 200) {
+                    let current = JSON.parse(xhr2.responseText);
+                    let div = document.querySelector(".current");
+                    div.innerHTML = "";
+                    let p = document.createElement("p");
+                    p.innerHTML = format_song(current);
+                    div.appendChild(p);
+                }
+            };
+            xhr2.send();
+        }
+
+        function format_song(song) {
+            return song.replace(/\.[^/.]+$/, "");
+        }
+    </script>
+</head>
+<body>
+<h1>Home</h1>
+<h2>Queue</h2>
+<script>
+    get_queue();
+    setInterval(get_queue, 1000);
+</script>
+<ul>
+
+</ul>
+<button onclick="clear_queue()">Clear queue</button>
+{#{% if queue|count !=0 %}#}
+{#    <ul>#}
+{#        {% for queued in queue %}#}
+{#            <li data-file="{{ queued }}">{{ remove_ext(queued.split("-")[1])[0] }} - {{ queued.split("-")[0] }}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#{% else %}#}
+{#    <p>Nothing queued</p>#}
+{#{% endif %}#}
+<h2>Songs</h2>
+<ul>
+    {% for song in songs %}
+        <li onclick="add_to_queue(this)" data-file="{{ song }}">{{ remove_ext(song.split("-")[1])[0] }}
+            - {{ song.split("-")[0] }}</li>
+    {% endfor %}
+</ul>
+<div class="current">
+    <p></p>
+</div>
+</body>
+</html>
