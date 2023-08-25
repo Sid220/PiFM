@@ -72,7 +72,7 @@ For more advanced customisation, you should edit the `news.py` file.
 | `ftp.pass`               | string        | The FTP password                                                         |
 | `news`                   | object        | The news configuration                                                   |
 | `news.enabled`           | bool          | Whether to enable news reports                                           |
-| `news.bbc`               | bool          | Whether to use the BBC preset (impacts some dialogue                     |
+| `news.bbc`               | bool          | Whether to use the BBC preset (impacts some dialogue)                    |
 | `news.interval`          | int           | The interval between news reports in hours                               |
 | `news.intro`             | object        | The intro configuration                                                  |
 | `news.intro.enabled`     | bool          | Whether to enable the intro                                              |
