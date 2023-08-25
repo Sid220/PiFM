@@ -46,7 +46,8 @@ def q_freq():
 
     if freq > 108 or freq < 87.5:
         print("Please enter a frequency between 87.5 and 108")
-    elif freq < 93 and rpi4:
+        q_freq()
+    elif freq > 93 and rpi4:
         print("High frequencies are known to be problomatic on Raspberry Pi 4")
         print("Continue anyway? [y/N]:", end=" ")
         if input().lower() not in ["yes", "y"]:
