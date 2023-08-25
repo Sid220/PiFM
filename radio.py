@@ -27,7 +27,7 @@ fi
 echo "defaults.pcm.card $CARD
 defaults.ctl.card $CARD" | sudo tee /etc/asound.conf
 """])
-    subprocess.run(["bash", "-c", "arecord -D hw:3,1,0 -c 2 -d 0 -r 22050 -f S16_LE | sudo ./fm_transmitter/fm_transmitter -f " + config["freq"] + " -"])
+    subprocess.run(["bash", "-c", "arecord -D hw:3,1,0 -c 2 -d 0 -r 22050 -f S16_LE | sudo ./fm_transmitter/fm_transmitter -f " + str(config["freq"]) + " -"])
 
 
 def play_song(song):
@@ -54,7 +54,7 @@ while True:
     print("Getting next song")
     # Get next song
     if config["ui"]["enabled"]:
-        song = requests.get("http://localhost:" + config["ui"]["port"] + "/next").json()["song"]
+        song = requests.get("http://localhost:" + str(config["ui"]["port"]) + "/next").json()["song"]
     else:
         if config["ftp"]["enabled"]:
             ftp = ftplib.FTP(config['ftp']['host'])
@@ -113,5 +113,5 @@ while True:
     song_thread = threading.Thread(target=play_song, args=(export_file.name,))
     song_thread.start()
     if config["ui"]["enabled"]:
-        requests.post("http://localhost:" + config["ui"]["port"] + "/current/" + song)
+        requests.post("http://localhost:" + str(config["ui"]["port"]) + "/current/" + song)
     time.sleep(1)
