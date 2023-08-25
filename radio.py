@@ -48,7 +48,7 @@ song_thread = threading.Thread(target=play_song,
                                args=("./fm_transmitter/acoustic_guitar_duet.wav",))
 song_thread.start()
 
-last_report = datetime.datetime.now() - datetime.timedelta(hours=2, minutes=1)
+last_report = datetime.datetime.now() - datetime.timedelta(hours=config["news"]["interval"], minutes=1)
 
 while True:
     print("Getting next song")
@@ -101,7 +101,7 @@ while True:
     ffmpeg.run(stream, overwrite_output=True)
 
     show_report = (6 <= datetime.datetime.now().hour < 20) and (
-            last_report < (datetime.datetime.now() - datetime.timedelta(hours=2))) and config["news"]["enabled"]
+            last_report < (datetime.datetime.now() - datetime.timedelta(hours=config["news"]["interval"]))) and config["news"]["enabled"]
     if show_report:
         print("News Report")
         subprocess.run(["python3", "news.py"])
