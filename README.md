@@ -85,6 +85,12 @@ For more advanced customisation, you should edit the `news.py` file.
 | `news.youtube.enabled`   | bool          | Whether to enable the YouTube portion                                    |
 | `news.youtube.channel`   | string        | The YouTube channel id to read from. THIS IS NOT THE SAME AS THE HANDLE! |
 
+## Notes
+- On the Raspberry Pi 4, GPIO21 is used for broadcasting (PIN 40 on GPIO header)
+- On other boards, GPIO4 is used for broadcasting (PIN 7 on GPIO header)
+- Frequencies above 93 MHz are known to be problomatic on the Raspberry Pi 4
+- Other ALSA loopback devices may interfere with PiFM, so it is recommended to remove them
+
 
 ## Disclaimer
 In most countries, transmitting radio waves without a state-issued licence specific to the transmission modalities (frequency, power, bandwidth, etc.) is illegal.
