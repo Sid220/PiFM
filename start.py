@@ -1,6 +1,8 @@
 import shutil
 import subprocess
 import threading
+import time
+
 import conf
 
 subprocess.run(["bash", "-c", "sudo echo '[+] sudo enabled'"])
@@ -16,5 +18,6 @@ def run_ui():
 if config["ui"]["enabled"]:
     ui_thread = threading.Thread(target=run_ui)
     ui_thread.start()
+    time.sleep(5)
 
 subprocess.run(["python3", "radio.py"])
