@@ -89,6 +89,7 @@ For more advanced customisation, you should edit the `news.py` file.
 - On the Raspberry Pi 4, GPIO21 is used for broadcasting (PIN 40 on GPIO header)
 - On other boards, GPIO4 is used for broadcasting (PIN 7 on GPIO header)
 - Frequencies above 93 MHz are known to be problomatic on the Raspberry Pi 4
+- Leaving the Web UI open for a long time can decrease audio quality
 - Other ALSA loopback devices may interfere with PiFM, so it is recommended to remove them
 
 
