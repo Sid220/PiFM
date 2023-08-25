@@ -12,7 +12,7 @@ config = conf.get_conf()
 def run_ui():
     shutil.copy("assets/queue.json", "queue.json")
     subprocess.run(
-        ["bash", "-c", "python3 -m uvicorn main:app --reload --host 0.0.0.0 --port " + str(config["ui"]["port"])])
+        ["bash", "-c", "python3 -m uvicorn main:app --host 0.0.0.0 --port " + str(config["ui"]["port"])])
 
 
 if config["ui"]["enabled"]:

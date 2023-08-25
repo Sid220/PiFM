@@ -26,8 +26,8 @@ if [ -z "$CARD" ]; then
 fi
 echo "defaults.pcm.card $CARD
 defaults.ctl.card $CARD" | sudo tee /etc/asound.conf
-"""])
-    subprocess.run(["bash", "-c", "arecord -D hw:3,1,0 -c 2 -d 0 -r 22050 -f S16_LE | sudo ./fm_transmitter/fm_transmitter -f " + str(config["freq"]) + " -"])
+arecord -D hw:3,1,0 -c 2 -d 0 -r 22050 -f S16_LE | sudo ./fm_transmitter/fm_transmitter -f """
+                    + str(config["freq"]) + " -"])
 
 
 def play_song(song):

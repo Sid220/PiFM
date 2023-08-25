@@ -17,7 +17,8 @@ def clear_queue():
     with open('queue.json') as f:
         data = json.load(f)
     with open('queue.json', 'w') as f:
-        data['queue'] = []
+        if len(data['queue']) > 0:
+            data['queue'] = [data['queue'][0]]
         json.dump(data, f)
     return {"error": False}
 

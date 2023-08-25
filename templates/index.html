@@ -8,8 +8,18 @@
             font-family: Ubuntu, sans-serif;
         }
 
-        li {
+        div > p {
             cursor: pointer;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+
+        button {
+            cursor: pointer;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
         }
 
         .current {
@@ -22,6 +32,7 @@
             color: #fff;
             text-align: center;
             line-height: 50px;
+            margin-top: 100px;
         }
     </style>
     <script>
@@ -45,18 +56,32 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     let queue = JSON.parse(xhr.responseText);
-                    let ul = document.querySelector("ul");
+                    let ul = document.querySelector("#queue");
                     ul.innerHTML = "";
-                    for (let i = 0; i < queue.length; i++) {
-                        let li = document.createElement("li");
-                        li.setAttribute("data-file", queue[i]);
-                        li.addEventListener("click", function () {
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("POST", "/remove/" + queue[i], true);
-                            xhr.send();
-                            get_queue();
-                        });
-                        li.innerHTML = format_song(queue[i]);
+                    if (queue.length > 0) {
+                        let li = document.createElement("p");
+                        li.setAttribute("data-file", queue[0]);
+                        li.innerHTML = format_song(queue[0]) + " <i>Preparing...</i>";
+                        ul.appendChild(li)
+                        if (queue.length !== 1) {
+                            let sep = document.createElement("hr");
+                            ul.appendChild(sep);
+                        }
+                        for (let i = 1; i < queue.length; i++) {
+                            let li = document.createElement("p");
+                            li.setAttribute("data-file", queue[i]);
+                            li.addEventListener("click", function () {
+                                let xhr = new XMLHttpRequest();
+                                xhr.open("POST", "/remove/" + queue[i], true);
+                                xhr.send();
+                                get_queue();
+                            });
+                            li.innerHTML = format_song(queue[i]);
+                            ul.appendChild(li);
+                        }
+                    } else {
+                        let li = document.createElement("p");
+                        li.innerHTML = "Nothing in queue";
                         ul.appendChild(li);
                     }
                 }
@@ -79,6 +104,9 @@
         }
 
         function format_song(song) {
+            if (song === null) {
+                return "Nothing playing";
+            }
             return song.replace(/\.[^/.]+$/, "");
         }
     </script>
@@ -90,26 +118,16 @@
     get_queue();
     setInterval(get_queue, 1000);
 </script>
-<ul>
-
-</ul>
+<div id="queue">
+</div>
 <button onclick="clear_queue()">Clear queue</button>
-{#{% if queue|count !=0 %}#}
-{#    <ul>#}
-{#        {% for queued in queue %}#}
-{#            <li data-file="{{ queued }}">{{ remove_ext(queued.split("-")[1])[0] }} - {{ queued.split("-")[0] }}</li>#}
-{#        {% endfor %}#}
-{#    </ul>#}
-{#{% else %}#}
-{#    <p>Nothing queued</p>#}
-{#{% endif %}#}
 <h2>Songs</h2>
-<ul>
+<div style="margin-bottom: 200px;">
     {% for song in songs %}
-        <li onclick="add_to_queue(this)" data-file="{{ song }}">{{ remove_ext(song.split("-")[1])[0] }}
-            - {{ song.split("-")[0] }}</li>
+        <p onclick="add_to_queue(this)" data-file="{{ song }}">{{ remove_ext(song.split("-")[1])[0] }}
+            - {{ song.split("-")[0] }}</p>
     {% endfor %}
-</ul>
+</div>
 <div class="current">
     <p></p>
 </div>
