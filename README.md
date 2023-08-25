@@ -53,6 +53,39 @@ It is a good idea to disable `bbc` in `conf.json` like above if you do this, whi
 
 For more advanced customisation, you should edit the `news.py` file. 
 
+## Config documentation
+| Key                      | Type          | Description                                                              |
+|--------------------------|---------------|--------------------------------------------------------------------------|
+| `freq`                   | float         | The frequency to broadcast at                                            |
+| `ui`                     | object        | The UI configuration                                                     |
+| `ui.enabled`             | bool          | Whether to enable the UI                                                 |
+| `ui.port`                | int           | The port to run the UI on, default 8000                                  |
+| `music_dir`              | string        | The directory to look for music in, locally unless FTP enabled           |
+| `slogan`                 | object        | The slogan configuration                                                 |
+| `slogan.enabled`         | bool          | Whether to enable the slogan after each song                             |
+| `slogan.files`           | array[string] | The audio files to play as slogans                                       |
+| `ftp`                    | object        | The FTP configuration                                                    |
+| `ftp.enabled`            | bool          | Whether to enable FTP                                                    |
+| `ftp.host`               | string        | The FTP host                                                             |
+| `ftp.port`               | int           | The FTP port                                                             |
+| `ftp.user`               | string        | The FTP username                                                         |
+| `ftp.pass`               | string        | The FTP password                                                         |
+| `news`                   | object        | The news configuration                                                   |
+| `news.enabled`           | bool          | Whether to enable news reports                                           |
+| `news.bbc`               | bool          | Whether to use the BBC preset (impacts some dialogue                     |
+| `news.interval`          | int           | The interval between news reports in hours                               |
+| `news.intro`             | object        | The intro configuration                                                  |
+| `news.intro.enabled`     | bool          | Whether to enable the intro                                              |
+| `news.intro.file`        | string        | The audio file to play as the intro                                      |
+| `news.rss`               | object        | The RSS configuration                                                    |
+| `news.rss.enabled`       | bool          | Whether to enable the RSS feed                                           |
+| `news.rss.url`           | string        | The URL of the RSS feed                                                  |
+| `news.rss.max_headlines` | int           | The maximum number of headlines to read                                  |
+| `news.youtube`           | object        | The YouTube configuration                                                |
+| `news.youtube.enabled`   | bool          | Whether to enable the YouTube portion                                    |
+| `news.youtube.channel`   | string        | The YouTube channel id to read from. THIS IS NOT THE SAME AS THE HANDLE! |
+
+
 ## Disclaimer
 In most countries, transmitting radio waves without a state-issued licence specific to the transmission modalities (frequency, power, bandwidth, etc.) is illegal.
 
