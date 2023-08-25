@@ -18,6 +18,15 @@ config = conf.get_conf()
 def run_radio():
     print("Running radio")
     subprocess.run(["bash", "-c", "sudo modprobe snd-aloop"])
+    subprocess.run(["bash", "-c", """
+CARD=$(cat /proc/asound/cards | grep "Loopback" | awk '{print $1}' | head -1)
+if [ -z "$CARD" ]; then
+    echo "Loopback device not found"
+    exit 1
+fi
+echo "defaults.pcm.card $CARD
+defaults.ctl.card $CARD" | sudo tee /etc/asound.conf
+"""])
     subprocess.run(["bash", "-c", "arecord -D hw:3,1,0 -c 2 -d 0 -r 22050 -f S16_LE | sudo ./fm_transmitter/fm_transmitter -f " + config["freq"] + " -"])
 
 
