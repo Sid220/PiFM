@@ -96,7 +96,4 @@ print("Would you like to have a web interface for your radio [Y/n]:", end=" ")
 conf["ui"]["enabled"] = input().lower() in ["yes", "y", ""]
 
 print("Writing config file...")
-if input().lower() in ["yes", "y", ""]:
-    with open('conf.json', 'w') as f:
-        json.dump(conf, f)
 print("Done.")
