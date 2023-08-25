@@ -45,7 +45,7 @@ radio.start()
 time.sleep(5)
 
 song_thread = threading.Thread(target=play_song,
-                               args=("./acoustic_guitar_duet.wav",))
+                               args=("./fm_transmitter/acoustic_guitar_duet.wav",))
 song_thread.start()
 
 last_report = datetime.datetime.now() - datetime.timedelta(hours=2, minutes=1)
