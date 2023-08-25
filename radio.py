@@ -91,9 +91,12 @@ while True:
     print("Converting next song")
 
     in_one = ffmpeg.input(song_file.name)
-    in_two = ffmpeg.input(
-        random.choice(["assets/88.61.mp3", "assets/88.62.mp3", "assets/88.63.mp3", "assets/88.64.mp3"]))
-    stream = ffmpeg.concat(in_one, in_two, v=0, a=1)
+    if config["slogan"]["enabled"]:
+        in_two = ffmpeg.input(
+            random.choice(config["slogan"]["files"]))
+        stream = ffmpeg.concat(in_one, in_two, v=0, a=1)
+    else:
+        stream = in_one
     stream = ffmpeg.output(stream, export_file.name, acodec='pcm_s16le', ac=2, ar=22050)
     ffmpeg.run(stream, overwrite_output=True)
 

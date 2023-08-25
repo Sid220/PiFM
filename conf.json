@@ -5,6 +5,10 @@
     "port": 8000
   },
   "music_dir": "/home/sid/spot",
+  "slogan": {
+    "enabled": false,
+    "files": ["assets/88.61.mp3", "assets/88.62.mp3", "assets/88.63.mp3", "assets/88.64.mp3"]
+  },
   "ftp": {
     "enabled": false,
     "port": 21,
